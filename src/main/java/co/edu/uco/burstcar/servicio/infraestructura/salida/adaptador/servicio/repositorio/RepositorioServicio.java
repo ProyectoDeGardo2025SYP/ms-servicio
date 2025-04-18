@@ -1,5 +1,6 @@
 package co.edu.uco.burstcar.servicio.infraestructura.salida.adaptador.servicio.repositorio;
 
+import co.edu.uco.burstcar.servicio.dominio.dto.ServicioActualizacionDto;
 import co.edu.uco.burstcar.servicio.dominio.dto.ServicioDto;
 import co.edu.uco.burstcar.servicio.dominio.modelo.*;
 import co.edu.uco.burstcar.servicio.infraestructura.salida.adaptador.delimitacionservicio.entidad.EntidadDelimitacionServicio;
@@ -23,6 +24,7 @@ import co.edu.uco.burstcar.servicio.infraestructura.salida.adaptador.viaservicio
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -70,9 +72,25 @@ public class RepositorioServicio implements co.edu.uco.burstcar.servicio.dominio
     }
 
     @Override
-    public void actualizarInformacionServicio(Servicio servicio) {
+    public void actualizarInformacionServicio(ServicioActualizacionDto dto, UUID idServcio) {
+        EntidadServicio entidadServicio = this.repositorioServicioJpa.findById(idServcio).orElse(null);
+        EntidadTipoServicio entidadTipoServicio = this.repositorioTipoServicioJpa.findByNombre(dto.getTipoServicio());
+        EntidadMonedaServicio entidadMonedaServicio = this.repositorioMonedaServicioJpa.findByNombre(dto.getMoneda());
+        EntidadUbicacion entidadUbicacion = this.repositorioUbicacionJpa.findById(dto.getUbicacion()).orElse(null);
+        EntidadDestino entidadDestino = this.repositorioDestinoJpa.findById(dto.getDestino()).orElse(null);
+        if (entidadServicio != null && Objects.equals(entidadServicio.getEntidadEstadoServicio().getNombre(), "Borrador")){
+            entidadServicio.setDescripcion(dto.getDescripcion());
+            entidadServicio.setEntidadTipoServicio(entidadTipoServicio);
+            entidadServicio.setUbicacion(entidadUbicacion);
+            entidadServicio.setDestino(entidadDestino);
+            entidadServicio.setCostoInicialSolicitante(dto.getCostoInicial());
+            entidadServicio.setMonedaServicio(entidadMonedaServicio);
+            this.repositorioServicioJpa.save(entidadServicio);
+        }
 
+         throw new IllegalArgumentException("El servicio ya se encuentra en proceso, no se puede actualizar");
     }
+
 
     @Override
     public void eliminarInformacionServicio(UUID identificador) {
@@ -103,7 +121,7 @@ public class RepositorioServicio implements co.edu.uco.burstcar.servicio.dominio
 
     @Override
     public List<ServicioDto> consultarInformacionServicios(UUID identificador) {
-        return this.repositorioServicioJpa.consultarServiciosNuevos(identificador).stream().map(
+        return this.repositorioServicioJpa.consultarServiciosMenosLosEliminados(identificador).stream().map(
                 entidad -> new ServicioDto(
                         entidad.getIdentificador(),
                         entidad.getDescripcion(),

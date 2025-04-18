@@ -9,14 +9,13 @@ import org.springframework.stereotype.Component;
 
 
 @Component
-public class MapeadorServicioEliminacionLogicaAplicacion implements MapeadorAplicacion<EstadoDto, EstadoServicio> {
+public class MapeadorServicioActualizarEstadoAplicacion implements MapeadorAplicacion<EstadoDto, EstadoServicio> {
     @Autowired
     private RepositorioEstadoServicio repositorioEstadoServicio;
 
 
     @Override
     public EstadoServicio aDominio(EstadoDto dto) {
-        EstadoServicio estadoServicio = this.repositorioEstadoServicio.asociarEstadoServicio(dto.getEstadoServicio());
-        return estadoServicio;
+        return this.repositorioEstadoServicio.asociarEstadoServicio(dto.getEstadoServicio());
     }
 }

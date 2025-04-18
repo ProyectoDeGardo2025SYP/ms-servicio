@@ -13,7 +13,7 @@ import java.util.UUID;
 @Repository
 public interface RepositorioServicioJpa extends JpaRepository<EntidadServicio, UUID> {
 
-    @Query(value = "Select * From servicio.servicio Where estado_servicio_id = :estadoId", nativeQuery = true)
-    List<EntidadServicio> consultarServiciosNuevos(@Param("estadoId") UUID estadoId);
+    @Query(value = "Select * From servicio.servicio Where estado_servicio_id != :estadoId", nativeQuery = true)
+    List<EntidadServicio> consultarServiciosMenosLosEliminados(@Param("estadoId") UUID estadoId);
 
 }

@@ -56,7 +56,7 @@ public class RepositorioOferta implements co.edu.uco.burstcar.servicio.dominio.p
     public void actualizarEstadoOferta(EstadoOferta estadoOferta, UUID identificadorOferta) {
         EntidadOferta entidadOferta = this.repositorioOfertaJpa.findById(identificadorOferta).orElse(null);
         EntidadEstadoOferta entidadEstadoOferta = this.repositorioEstadoOfertaJpa.findByNombre(estadoOferta.getNombre());
-        if(entidadEstadoOferta != null){
+        if(entidadOferta != null){
             entidadOferta.setEntidadEstadoOferta(entidadEstadoOferta);
             this.repositorioOfertaJpa.save(entidadOferta);
         }

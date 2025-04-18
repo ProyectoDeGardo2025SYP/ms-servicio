@@ -1,5 +1,6 @@
 package co.edu.uco.burstcar.servicio.dominio.puerto;
 
+import co.edu.uco.burstcar.servicio.dominio.dto.ServicioActualizacionDto;
 import co.edu.uco.burstcar.servicio.dominio.dto.ServicioDto;
 import co.edu.uco.burstcar.servicio.dominio.modelo.EstadoServicio;
 import co.edu.uco.burstcar.servicio.dominio.modelo.Servicio;
@@ -11,7 +12,7 @@ import java.util.UUID;
 public interface RepositorioServicio {
 
     UUID registrarInformacionServicio(Servicio servicio);
-    void actualizarInformacionServicio(Servicio servicio);
+    void actualizarInformacionServicio(ServicioActualizacionDto dto, UUID idServcio);
     void eliminarInformacionServicio(UUID identificador);
     void eliminarLogicamenteInformacionServicio(EstadoServicio estadoServicio, UUID idServicio);
     EstadoServicio consultarEstadoServicio(UUID identificador);

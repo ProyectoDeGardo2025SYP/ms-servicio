@@ -1,6 +1,5 @@
 package co.edu.uco.burstcar.servicio.dominio.servicio.oferta;
 
-import co.edu.uco.burstcar.servicio.dominio.modelo.MonedaServicio;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
