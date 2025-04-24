@@ -2,6 +2,7 @@ package co.edu.uco.burstcar.servicio.infraestructura.entrada.oferta.consulta;
 
 import co.edu.uco.burstcar.servicio.aplicacion.casodeuso.oferta.consulta.CasoDeUsoConsultarOferta;
 import co.edu.uco.burstcar.servicio.dominio.dto.OfertaDto;
+import co.edu.uco.burstcar.servicio.dominio.dto.PaginaDto;
 import co.edu.uco.burstcar.servicio.dominio.dto.ServicioDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +22,9 @@ public class ConsultaControladorOferta {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/todos/{id}")
-    public List<OfertaDto> consultarOfertas(@PathVariable UUID id){
-        return this.consultarOferta.ejecutarConsulta(id);
+    public PaginaDto<OfertaDto> consultarOfertas(@PathVariable UUID id,
+                                                 @RequestParam(defaultValue = "0") int pagina,
+                                                 @RequestParam(defaultValue = "3") int cantidad){
+        return this.consultarOferta.ejecutarConsulta(id, pagina, cantidad);
     }
 }

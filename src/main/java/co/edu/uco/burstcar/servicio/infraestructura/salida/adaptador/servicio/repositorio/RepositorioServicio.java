@@ -1,5 +1,6 @@
 package co.edu.uco.burstcar.servicio.infraestructura.salida.adaptador.servicio.repositorio;
 
+import co.edu.uco.burstcar.servicio.dominio.dto.PaginaDto;
 import co.edu.uco.burstcar.servicio.dominio.dto.ServicioActualizacionDto;
 import co.edu.uco.burstcar.servicio.dominio.dto.ServicioDto;
 import co.edu.uco.burstcar.servicio.dominio.modelo.*;
@@ -21,6 +22,9 @@ import co.edu.uco.burstcar.servicio.infraestructura.salida.adaptador.ubicacion.e
 import co.edu.uco.burstcar.servicio.infraestructura.salida.adaptador.ubicacion.repositorio.jpa.RepositorioUbicacionJpa;
 import co.edu.uco.burstcar.servicio.infraestructura.salida.adaptador.viaservicio.entidad.EntidadViaServicio;
 import co.edu.uco.burstcar.servicio.infraestructura.salida.adaptador.viaservicio.repositorio.jpa.RepositorioViaServicioJpa;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -120,9 +124,10 @@ public class RepositorioServicio implements co.edu.uco.burstcar.servicio.dominio
     }
 
     @Override
-    public List<ServicioDto> consultarInformacionServicios(UUID identificador) {
-        return this.repositorioServicioJpa.consultarServiciosMenosLosEliminados(identificador).stream().map(
-                entidad -> new ServicioDto(
+    public PaginaDto<ServicioDto> consultarInformacionServicios(UUID identificador, int pagina, int cantidad) {
+        Pageable pageable = PageRequest.of(pagina, cantidad);
+        Page<EntidadServicio> entidadServicios = this.repositorioServicioJpa.consultarServiciosMenosLosEliminados(identificador, pageable);
+        List<ServicioDto> servicioDtos = entidadServicios.getContent().stream().map(entidad -> new ServicioDto(
                         entidad.getIdentificador(),
                         entidad.getDescripcion(),
                         entidad.getEntidadSolicitanteServicio().getNombreSolicitante(),
@@ -140,6 +145,7 @@ public class RepositorioServicio implements co.edu.uco.burstcar.servicio.dominio
                         entidad.getCostoInicialSolicitante(),
                         entidad.getMonedaServicio().getNombre(),
                         entidad.getFechaCreacion())).collect(Collectors.toList());
+        return new PaginaDto<>(servicioDtos, entidadServicios.getNumber(), entidadServicios.getTotalPages(), entidadServicios.getTotalElements());
     }
     @Override
     public void realizarSeguimientoServicio(UbicacionServicio ubicacion) {

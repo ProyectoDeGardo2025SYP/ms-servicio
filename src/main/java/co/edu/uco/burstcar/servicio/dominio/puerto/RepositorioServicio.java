@@ -1,5 +1,6 @@
 package co.edu.uco.burstcar.servicio.dominio.puerto;
 
+import co.edu.uco.burstcar.servicio.dominio.dto.PaginaDto;
 import co.edu.uco.burstcar.servicio.dominio.dto.ServicioActualizacionDto;
 import co.edu.uco.burstcar.servicio.dominio.dto.ServicioDto;
 import co.edu.uco.burstcar.servicio.dominio.modelo.EstadoServicio;
@@ -16,7 +17,7 @@ public interface RepositorioServicio {
     void eliminarInformacionServicio(UUID identificador);
     void eliminarLogicamenteInformacionServicio(EstadoServicio estadoServicio, UUID idServicio);
     EstadoServicio consultarEstadoServicio(UUID identificador);
-    List<ServicioDto> consultarInformacionServicios(UUID identificador);
+    PaginaDto<ServicioDto> consultarInformacionServicios(UUID identificador, int pagina, int cantidad);
     void realizarSeguimientoServicio(UbicacionServicio ubicacion);
     void actualizarEstadosDelServicio(EstadoServicio estadoServicio, UUID identificador);
     Servicio asociarServcioAOferta(UUID identificador);

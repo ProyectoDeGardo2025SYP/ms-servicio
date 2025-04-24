@@ -1,6 +1,7 @@
 package co.edu.uco.burstcar.servicio.infraestructura.salida.adaptador.oferta.repositorio;
 
 import co.edu.uco.burstcar.servicio.dominio.dto.OfertaDto;
+import co.edu.uco.burstcar.servicio.dominio.dto.PaginaDto;
 import co.edu.uco.burstcar.servicio.dominio.modelo.EstadoOferta;
 import co.edu.uco.burstcar.servicio.dominio.modelo.MonedaServicio;
 import co.edu.uco.burstcar.servicio.dominio.modelo.Oferta;
@@ -15,6 +16,9 @@ import co.edu.uco.burstcar.servicio.infraestructura.salida.adaptador.prestadorse
 import co.edu.uco.burstcar.servicio.infraestructura.salida.adaptador.prestadorservicio.repositorio.jpa.RepositorioPrestadorServicioJpa;
 import co.edu.uco.burstcar.servicio.infraestructura.salida.adaptador.servicio.entidad.EntidadServicio;
 import co.edu.uco.burstcar.servicio.infraestructura.salida.adaptador.servicio.repositorio.jpa.RepositorioServicioJpa;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
@@ -68,12 +72,15 @@ public class RepositorioOferta implements co.edu.uco.burstcar.servicio.dominio.p
     }
 
     @Override
-    public List<OfertaDto> consultarOfertas(UUID servicio) {
-        return this.repositorioOfertaJpa.obtenerOfertasDeUnServicio(servicio).stream()
-                .map(entidad -> new OfertaDto(entidad.getIdentificador(),
+    public PaginaDto<OfertaDto> consultarOfertas(UUID servicio, int pagina, int cantidad) {
+        Pageable pageable = PageRequest.of(pagina, cantidad);
+        Page<EntidadOferta> entidadOfertas = this.repositorioOfertaJpa.obtenerOfertasDeUnServicio(servicio, pageable);
+
+        List<OfertaDto> ofertaDtos = entidadOfertas.getContent().stream().map(entidad -> new OfertaDto(entidad.getIdentificador(),
                         entidad.getDescripcion(), entidad.getCosto(), entidad.getEntidadMonedaServicio().getNombre(),
                         entidad.getFechaInicio(), entidad.getFechaFin(), entidad.getEntidadEstadoOferta().getNombre(),
                         entidad.getEntidadServicio().getIdentificador(),
                         entidad.getEntidadPrestadorServicio().getNumeroIdentificacion())).toList();
+        return new PaginaDto<>(ofertaDtos, entidadOfertas.getNumber(), entidadOfertas.getTotalPages(), entidadOfertas.getTotalElements());
     }
 }

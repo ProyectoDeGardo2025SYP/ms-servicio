@@ -1,5 +1,6 @@
 package co.edu.uco.burstcar.servicio.aplicacion.casodeuso.servicio.consulta;
 
+import co.edu.uco.burstcar.servicio.dominio.dto.PaginaDto;
 import co.edu.uco.burstcar.servicio.dominio.dto.ServicioDto;
 import co.edu.uco.burstcar.servicio.dominio.servicio.servicio.ServicioConsultarServicio;
 import org.springframework.stereotype.Component;
@@ -15,7 +16,7 @@ public class CasoDeUsoConsultarServicio {
         this.servicioConsultarServicio = servicioConsultarServicio;
     }
 
-    public List<ServicioDto> ejecutarConsulta(UUID id) {
-        return this.servicioConsultarServicio.ejecutarConsulta(id);
+    public PaginaDto<ServicioDto> ejecutarConsulta(UUID id, int pagina, int cantidad) {
+        return this.servicioConsultarServicio.ejecutarConsulta(id, pagina, cantidad);
     }
 }

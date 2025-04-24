@@ -1,5 +1,6 @@
 package co.edu.uco.burstcar.servicio.dominio.servicio.servicio;
 
+import co.edu.uco.burstcar.servicio.dominio.dto.PaginaDto;
 import co.edu.uco.burstcar.servicio.dominio.dto.ServicioDto;
 import co.edu.uco.burstcar.servicio.dominio.puerto.RepositorioServicio;
 
@@ -14,7 +15,7 @@ public class ServicioConsultarServicio {
         this.repositorioServicio = repositorioServicio;
     }
 
-    public List<ServicioDto> ejecutarConsulta(UUID id){
-        return this.repositorioServicio.consultarInformacionServicios(id);
+    public PaginaDto<ServicioDto> ejecutarConsulta(UUID id, int pagina, int cantidad){
+        return this.repositorioServicio.consultarInformacionServicios(id, pagina, cantidad);
     }
 }

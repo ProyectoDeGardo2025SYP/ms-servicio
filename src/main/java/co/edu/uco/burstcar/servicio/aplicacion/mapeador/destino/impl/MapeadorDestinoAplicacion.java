@@ -19,8 +19,7 @@ public class MapeadorDestinoAplicacion implements MapeadorAplicacion<DestinoDto,
 
     @Override
     public DestinoServicio aDominio(DestinoDto dto) {
-        UbicacionServicio ubicacionServicio = this.repositorioUbicacion.consultarUbicacionPorLatitudYLongitud(dto.getLatitudUbicacion(),
-                dto.getLongitudUbicacion());
+        UbicacionServicio ubicacionServicio = this.repositorioUbicacion.consultarUbicacion(dto.getUbicacionId());
         return DestinoServicio.nuevoDestino(dto.getNombreDestinatario(), dto.getNumeroIdentificacion(), ubicacionServicio);
     }
 }

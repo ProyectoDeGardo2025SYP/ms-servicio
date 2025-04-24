@@ -1,6 +1,7 @@
 package co.edu.uco.burstcar.servicio.dominio.puerto;
 
 import co.edu.uco.burstcar.servicio.dominio.dto.OfertaDto;
+import co.edu.uco.burstcar.servicio.dominio.dto.PaginaDto;
 import co.edu.uco.burstcar.servicio.dominio.modelo.EstadoOferta;
 import co.edu.uco.burstcar.servicio.dominio.modelo.MonedaServicio;
 import co.edu.uco.burstcar.servicio.dominio.modelo.Oferta;
@@ -15,6 +16,6 @@ public interface RepositorioOferta {
     UUID registrarInformacionNuevaOferta(Oferta oferta);
     void actualizarEstadoOferta(EstadoOferta estadoOferta, UUID identificadorOferta);
     void notificarSolicitanteNegociacionOferta(Oferta oferta);
-    List<OfertaDto> consultarOfertas(UUID servicio);
+    PaginaDto<OfertaDto> consultarOfertas(UUID servicio, int pagina, int cantidad);
 
 }

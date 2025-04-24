@@ -4,19 +4,33 @@ import co.edu.uco.burstcar.servicio.dominio.modelo.EntidadIdentificador;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.UUID;
+
 
 @Getter
 @Setter
 public class DestinoDto extends EntidadIdentificador {
     private String nombreDestinatario;
     private String numeroIdentificacion;
-    private Double latitudUbicacion;
-    private Double longitudUbicacion;
+    private UUID ubicacionId;
 
-    public DestinoDto(String nombreDestinatario, String numeroIdentificacion, Double latitudUbicacion, Double longitudUbicacion) {
+    public DestinoDto() {
+    }
+
+    public DestinoDto(UUID identificador) {
+        super(identificador);
+    }
+
+    public DestinoDto(String nombreDestinatario, String numeroIdentificacion, UUID ubicacionId) {
         this.nombreDestinatario = nombreDestinatario;
         this.numeroIdentificacion = numeroIdentificacion;
-        this.latitudUbicacion = latitudUbicacion;
-        this.longitudUbicacion = longitudUbicacion;
+        this.ubicacionId = ubicacionId;
+    }
+
+    public DestinoDto(UUID identificador, String nombreDestinatario, String numeroIdentificacion, UUID ubicacionId) {
+        super(identificador);
+        this.nombreDestinatario = nombreDestinatario;
+        this.numeroIdentificacion = numeroIdentificacion;
+        this.ubicacionId = ubicacionId;
     }
 }
