@@ -147,6 +147,31 @@ public class RepositorioServicio implements co.edu.uco.burstcar.servicio.dominio
                         entidad.getFechaCreacion())).collect(Collectors.toList());
         return new PaginaDto<>(servicioDtos, entidadServicios.getNumber(), entidadServicios.getTotalPages(), entidadServicios.getTotalElements());
     }
+
+    @Override
+    public ServicioDto consultarServicio(UUID identificador) {
+        EntidadServicio entidadServicio = this.repositorioServicioJpa.findById(identificador).orElse(null);
+        assert entidadServicio != null;
+        return new ServicioDto(
+                entidadServicio.getIdentificador(),
+                entidadServicio.getDescripcion(),
+                entidadServicio.getEntidadSolicitanteServicio().getNombreSolicitante(),
+                entidadServicio.getEntidadSolicitanteServicio().getNumeroIdentificacion(),
+                entidadServicio.getEntidadTipoServicio().getNombre(),
+                entidadServicio.getEntidadEstadoServicio().getNombre(),
+                entidadServicio.getUbicacion().getIdentificador(),
+                entidadServicio.getUbicacion().getLatitud(),
+                entidadServicio.getUbicacion().getLongitud(),
+                entidadServicio.getDestino().getIdentificador(),
+                entidadServicio.getDestino().getNombreDestinatario(),
+                entidadServicio.getDestino().getNumeroIdentificacion(),
+                entidadServicio.getDestino().getEntidadUbicacion().getLatitud(),
+                entidadServicio.getDestino().getEntidadUbicacion().getLongitud(),
+                entidadServicio.getCostoInicialSolicitante(),
+                entidadServicio.getMonedaServicio().getNombre(),
+                entidadServicio.getFechaCreacion());
+    }
+
     @Override
     public void realizarSeguimientoServicio(UbicacionServicio ubicacion) {
 
