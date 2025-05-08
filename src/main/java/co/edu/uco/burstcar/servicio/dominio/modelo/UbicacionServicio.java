@@ -1,7 +1,6 @@
 package co.edu.uco.burstcar.servicio.dominio.modelo;
 
 import co.edu.uco.burstcar.servicio.dominio.validador.ValidadorDeAtibutos;
-import co.edu.uco.burstcar.servicio.dominio.validador.ValidadorDeObjetos;
 import lombok.NoArgsConstructor;
 
 import java.util.UUID;
@@ -31,11 +30,11 @@ public class UbicacionServicio extends EntidadIdentificador{
     public static UbicacionServicio nuevaUbicacionServcio(String numeroVia, String direccion, Double latitud, Double longitud, String detalleAdicional, DelimitacionServicio delimitacionServicio, ViaServicio viaServicio) {
         ValidadorDeAtibutos.validarAtributosTexto(numeroVia, "número de vía", 3);
         ValidadorDeAtibutos.validarAtributosTexto(direccion, "dirección", 15);
-        ValidadorDeObjetos.validarNoNulos(latitud, "latitud");
-        ValidadorDeObjetos.validarNoNulos(longitud, "longitud");
+        ValidadorDeAtibutos.validarObjetoNoNulo(latitud, "latitud");
+        ValidadorDeAtibutos.validarObjetoNoNulo(longitud, "longitud");
         ValidadorDeAtibutos.validarAtributosTexto(detalleAdicional, "detalle adicional", 100);
-        ValidadorDeObjetos.validarNoNulos(delimitacionServicio, "delimitación");
-        ValidadorDeObjetos.validarNoNulos(viaServicio, "vía");
+        ValidadorDeAtibutos.validarObjetoNoNulo(delimitacionServicio, "delimitación");
+        ValidadorDeAtibutos.validarObjetoNoNulo(viaServicio, "vía");
         return new UbicacionServicio(numeroVia, direccion, latitud, longitud, detalleAdicional, delimitacionServicio, viaServicio);
     }
 
@@ -53,11 +52,11 @@ public class UbicacionServicio extends EntidadIdentificador{
     public static UbicacionServicio nuevaUbicacionServcioConIdentificador(UUID id, String numeroVia, String direccion, Double latitud, Double longitud, String detalleAdicional, DelimitacionServicio delimitacionServicio, ViaServicio viaServicio) {
         ValidadorDeAtibutos.validarAtributosTexto(numeroVia, "número de vía", 3);
         ValidadorDeAtibutos.validarAtributosTexto(direccion, "dirección", 15);
-        ValidadorDeObjetos.validarNoNulos(latitud, "latitud");
-        ValidadorDeObjetos.validarNoNulos(longitud, "longitud");
+        ValidadorDeAtibutos.validarObjetoNoNulo(latitud, "latitud");
+        ValidadorDeAtibutos.validarObjetoNoNulo(longitud, "longitud");
         ValidadorDeAtibutos.validarAtributosTexto(detalleAdicional, "detalle adicional", 100);
-        ValidadorDeObjetos.validarNoNulos(delimitacionServicio, "delimitación");
-        ValidadorDeObjetos.validarNoNulos(viaServicio, "vía");
+        ValidadorDeAtibutos.validarObjetoNoNulo(delimitacionServicio, "delimitación");
+        ValidadorDeAtibutos.validarObjetoNoNulo(viaServicio, "vía");
         return new UbicacionServicio(id, numeroVia, direccion, latitud, longitud, detalleAdicional, delimitacionServicio, viaServicio);
     }
 

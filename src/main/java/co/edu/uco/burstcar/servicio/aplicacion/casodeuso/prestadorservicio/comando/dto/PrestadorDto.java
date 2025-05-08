@@ -29,7 +29,7 @@ public class PrestadorDto extends EntidadIdentificador {
     private Double latitudPrestador;
     @JsonProperty("longitud")
     private Double longitudPrestador;
-    @JsonProperty("nombre_identificacion")
+    @JsonProperty("nombreIdentificaion")
     private String nombreIdentificacion;
     @JsonProperty("identificacionCategoriaId")
     private String tipoIdentificacion;

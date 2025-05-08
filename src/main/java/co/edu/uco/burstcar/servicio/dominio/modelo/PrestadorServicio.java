@@ -2,7 +2,6 @@ package co.edu.uco.burstcar.servicio.dominio.modelo;
 
 
 import co.edu.uco.burstcar.servicio.dominio.validador.ValidadorDeAtibutos;
-import co.edu.uco.burstcar.servicio.dominio.validador.ValidadorDeObjetos;
 
 import java.util.UUID;
 
@@ -37,8 +36,8 @@ public class PrestadorServicio extends EntidadIdentificador{
         ValidadorDeAtibutos.validarAtributosTexto(identificacionPrestador, "número de identifición", 12);
         ValidadorDeAtibutos.validarAtributosTexto(nombrePrestador, "nombre", 30);
         ValidadorDeAtibutos.validarAtributosTexto(nombreUsuario, "usuario", 15);
-        ValidadorDeObjetos.validarNoNulos(latitudPrestador, "latitud del prestador");
-        ValidadorDeObjetos.validarNoNulos(longitudPrestador, "longitud del prestador");
+        ValidadorDeAtibutos.validarObjetoNoNulo(latitudPrestador, "latitud del prestador");
+        ValidadorDeAtibutos.validarObjetoNoNulo(longitudPrestador, "longitud del prestador");
         ValidadorDeAtibutos.validarAtributosTexto(nombreIdentificacion, "nombre del tipo de identificación", 30);
         ValidadorDeAtibutos.validarAtributosTexto(tipoIdentificacion, "tipo de identificación", 5);
         return new PrestadorServicio(identificacionPrestador, nombrePrestador, nombreUsuario,
@@ -64,8 +63,8 @@ public class PrestadorServicio extends EntidadIdentificador{
         ValidadorDeAtibutos.validarAtributosTexto(identificacionPrestador, "número de identifición", 12);
         ValidadorDeAtibutos.validarAtributosTexto(nombrePrestador, "nombre", 30);
         ValidadorDeAtibutos.validarAtributosTexto(nombreUsuario, "usuario", 15);
-        ValidadorDeObjetos.validarNoNulos(latitudPrestador, "latitud del prestador");
-        ValidadorDeObjetos.validarNoNulos(longitudPrestador, "longitud del prestador");
+        ValidadorDeAtibutos.validarObjetoNoNulo(latitudPrestador, "latitud del prestador");
+        ValidadorDeAtibutos.validarObjetoNoNulo(longitudPrestador, "longitud del prestador");
         ValidadorDeAtibutos.validarAtributosTexto(nombreIdentificacion, "nombre del tipo de identificación", 30);
         ValidadorDeAtibutos.validarAtributosTexto(tipoIdentificacion, "tipo de identificación", 5);
         return new PrestadorServicio(id, identificacionPrestador, nombrePrestador, nombreUsuario,

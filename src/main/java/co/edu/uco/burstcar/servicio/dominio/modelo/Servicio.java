@@ -1,7 +1,6 @@
 package co.edu.uco.burstcar.servicio.dominio.modelo;
 
 import co.edu.uco.burstcar.servicio.dominio.validador.ValidadorDeAtibutos;
-import co.edu.uco.burstcar.servicio.dominio.validador.ValidadorDeObjetos;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
@@ -33,13 +32,13 @@ public class Servicio extends EntidadIdentificador{
 
     public static Servicio nuevoServicio(String descripcion, SolicitanteServicio solicitanteServicio, TipoServicio tipoServicio, EstadoServicio estadoServicio, UbicacionServicio ubicacion, DestinoServicio destino, float costoInicialSolicitante, MonedaServicio monedaServicio, LocalDateTime fechaCreacion) {
         ValidadorDeAtibutos.validarAtributosTexto(descripcion, "descripción", 100);
-        ValidadorDeObjetos.validarNoNulos(solicitanteServicio, "solicitante");
-        ValidadorDeObjetos.validarNoNulos(tipoServicio, "tipo de servicio");
-        ValidadorDeObjetos.validarNoNulos(estadoServicio, "estado de servicip");
-        ValidadorDeObjetos.validarNoNulos(ubicacion, "ubicacipon");
-        ValidadorDeObjetos.validarNoNulos(destino, "destino");
-        ValidadorDeObjetos.validarNoNulos(monedaServicio, "moneda del servicio");
-        ValidadorDeObjetos.validarNoNulos(fechaCreacion, "fecha de creación");
+        ValidadorDeAtibutos.validarObjetoNoNulo(solicitanteServicio, "solicitante");
+        ValidadorDeAtibutos.validarObjetoNoNulo(tipoServicio, "tipo de servicio");
+        ValidadorDeAtibutos.validarObjetoNoNulo(estadoServicio, "estado de servicip");
+        ValidadorDeAtibutos.validarObjetoNoNulo(ubicacion, "ubicacipon");
+        ValidadorDeAtibutos.validarObjetoNoNulo(destino, "destino");
+        ValidadorDeAtibutos.validarObjetoNoNulo(monedaServicio, "moneda del servicio");
+        ValidadorDeAtibutos.validarObjetoNoNulo(fechaCreacion, "fecha de creación");
         return new Servicio(descripcion, solicitanteServicio, tipoServicio, estadoServicio,
                 ubicacion, destino, costoInicialSolicitante, monedaServicio, fechaCreacion);
     }
@@ -59,13 +58,13 @@ public class Servicio extends EntidadIdentificador{
 
     public static Servicio nuevoServicioConIdentifiacdor(UUID id, String descripcion, SolicitanteServicio solicitanteServicio, TipoServicio tipoServicio, EstadoServicio estadoServicio, UbicacionServicio ubicacion, DestinoServicio destino, float costoInicialSolicitante, MonedaServicio monedaServicio, LocalDateTime fechaCreacion) {
         ValidadorDeAtibutos.validarAtributosTexto(descripcion, "descripción", 100);
-        ValidadorDeObjetos.validarNoNulos(solicitanteServicio, "solicitante");
-        ValidadorDeObjetos.validarNoNulos(tipoServicio, "tipo de servicio");
-        ValidadorDeObjetos.validarNoNulos(estadoServicio, "estado de servicip");
-        ValidadorDeObjetos.validarNoNulos(ubicacion, "ubicacipon");
-        ValidadorDeObjetos.validarNoNulos(destino, "destino");
-        ValidadorDeObjetos.validarNoNulos(monedaServicio, "moneda del servicio");
-        ValidadorDeObjetos.validarNoNulos(fechaCreacion, "fecha de creación");
+        ValidadorDeAtibutos.validarObjetoNoNulo(solicitanteServicio, "solicitante");
+        ValidadorDeAtibutos.validarObjetoNoNulo(tipoServicio, "tipo de servicio");
+        ValidadorDeAtibutos.validarObjetoNoNulo(estadoServicio, "estado de servicip");
+        ValidadorDeAtibutos.validarObjetoNoNulo(ubicacion, "ubicacipon");
+        ValidadorDeAtibutos.validarObjetoNoNulo(destino, "destino");
+        ValidadorDeAtibutos.validarObjetoNoNulo(monedaServicio, "moneda del servicio");
+        ValidadorDeAtibutos.validarObjetoNoNulo(fechaCreacion, "fecha de creación");
         return new Servicio(id, descripcion, solicitanteServicio, tipoServicio, estadoServicio,
                 ubicacion, destino, costoInicialSolicitante, monedaServicio, fechaCreacion);
     }

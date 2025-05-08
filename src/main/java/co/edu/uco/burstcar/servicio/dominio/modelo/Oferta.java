@@ -1,7 +1,6 @@
 package co.edu.uco.burstcar.servicio.dominio.modelo;
 
 import co.edu.uco.burstcar.servicio.dominio.validador.ValidadorDeAtibutos;
-import co.edu.uco.burstcar.servicio.dominio.validador.ValidadorDeObjetos;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -29,12 +28,12 @@ public class Oferta extends EntidadIdentificador{
 
     public static Oferta nuevaOferta(String descripcion, float costo, MonedaServicio monedaServicio, LocalDateTime fechaInicio, LocalDateTime fechaFin, EstadoOferta estadoOferta, Servicio servicio, PrestadorServicio prestadorServicio) {
         ValidadorDeAtibutos.validarAtributosTexto(descripcion, "descripción", 100);
-        ValidadorDeObjetos.validarNoNulos(monedaServicio, "moneda");
-        ValidadorDeObjetos.validarNoNulos(fechaInicio, "fecha de inicio");
-        ValidadorDeObjetos.validarNoNulos(fechaFin, "fecha de finalización");
-        ValidadorDeObjetos.validarNoNulos(estadoOferta, "estado de la oferta");
-        ValidadorDeObjetos.validarNoNulos(servicio, "servicio");
-        ValidadorDeObjetos.validarNoNulos(prestadorServicio, "prestador");
+        ValidadorDeAtibutos.validarObjetoNoNulo(monedaServicio, "moneda");
+        ValidadorDeAtibutos.validarObjetoNoNulo(fechaInicio, "fecha de inicio");
+        ValidadorDeAtibutos.validarObjetoNoNulo(fechaFin, "fecha de finalización");
+        ValidadorDeAtibutos.validarObjetoNoNulo(estadoOferta, "estado de la oferta");
+        ValidadorDeAtibutos.validarObjetoNoNulo(servicio, "servicio");
+        ValidadorDeAtibutos.validarObjetoNoNulo(prestadorServicio, "prestador");
         return  new Oferta(descripcion, costo, monedaServicio, fechaInicio, fechaFin, estadoOferta, servicio, prestadorServicio);
     }
 
@@ -52,12 +51,12 @@ public class Oferta extends EntidadIdentificador{
 
     public static Oferta nuevaOfertaConIdentificador(UUID id, String descripcion, float costo, MonedaServicio monedaServicio, LocalDateTime fechaInicio, LocalDateTime fechaFin, EstadoOferta estadoOferta, Servicio servicio, PrestadorServicio prestadorServicio) {
         ValidadorDeAtibutos.validarAtributosTexto(descripcion, "descripción", 100);
-        ValidadorDeObjetos.validarNoNulos(monedaServicio, "moneda");
-        ValidadorDeObjetos.validarNoNulos(fechaInicio, "fecha de inicio");
-        ValidadorDeObjetos.validarNoNulos(fechaFin, "fecha de finalización");
-        ValidadorDeObjetos.validarNoNulos(estadoOferta, "estado de la oferta");
-        ValidadorDeObjetos.validarNoNulos(servicio, "servicio");
-        ValidadorDeObjetos.validarNoNulos(prestadorServicio, "prestador");
+        ValidadorDeAtibutos.validarObjetoNoNulo(monedaServicio, "moneda");
+        ValidadorDeAtibutos.validarObjetoNoNulo(fechaInicio, "fecha de inicio");
+        ValidadorDeAtibutos.validarObjetoNoNulo(fechaFin, "fecha de finalización");
+        ValidadorDeAtibutos.validarObjetoNoNulo(estadoOferta, "estado de la oferta");
+        ValidadorDeAtibutos.validarObjetoNoNulo(servicio, "servicio");
+        ValidadorDeAtibutos.validarObjetoNoNulo(prestadorServicio, "prestador");
         return  new Oferta(id, descripcion, costo, monedaServicio, fechaInicio, fechaFin, estadoOferta, servicio, prestadorServicio);
     }
 

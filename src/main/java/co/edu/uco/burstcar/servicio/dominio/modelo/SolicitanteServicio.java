@@ -1,7 +1,6 @@
 package co.edu.uco.burstcar.servicio.dominio.modelo;
 
 import co.edu.uco.burstcar.servicio.dominio.validador.ValidadorDeAtibutos;
-import co.edu.uco.burstcar.servicio.dominio.validador.ValidadorDeObjetos;
 import jakarta.validation.constraints.Size;
 import java.util.UUID;
 import lombok.Getter;
@@ -45,7 +44,7 @@ public class SolicitanteServicio extends EntidadIdentificador{
         ValidadorDeAtibutos.validarAtributosTexto(numeroIdentificacion, "número de identifición", 12);
         ValidadorDeAtibutos.validarAtributosTexto(nombreSolicitante, "nombre", 30);
         ValidadorDeAtibutos.validarAtributosTexto(nombreUsuario, "usuario", 15);
-        ValidadorDeObjetos.validarNoNulos(telefonoSolicitante, "telefono");
+        ValidadorDeAtibutos.validarObjetoNoNulo(telefonoSolicitante, "telefono");
         ValidadorDeAtibutos.validarAtributosTexto(nombreIdentificacion, "nombre del tipo de identificación", 30);
         ValidadorDeAtibutos.validarAtributosTexto(tipoIdentificacion, "tipo de identificación", 5);
         return new SolicitanteServicio(numeroIdentificacion, nombreSolicitante, nombreUsuario, telefonoSolicitante,
@@ -67,7 +66,7 @@ public class SolicitanteServicio extends EntidadIdentificador{
         ValidadorDeAtibutos.validarAtributosTexto(numeroIdentificacion, "número de identifición", 12);
         ValidadorDeAtibutos.validarAtributosTexto(nombreSolicitante, "nombre", 30);
         ValidadorDeAtibutos.validarAtributosTexto(nombreUsuario, "usuario", 15);
-        ValidadorDeObjetos.validarNoNulos(telefonoSolicitante, "telefono");
+        ValidadorDeAtibutos.validarObjetoNoNulo(telefonoSolicitante, "telefono");
         ValidadorDeAtibutos.validarAtributosTexto(nombreIdentificacion, "nombre del tipo de identificación", 30);
         ValidadorDeAtibutos.validarAtributosTexto(tipoIdentificacion, "tipo de identificación", 5);
         return new SolicitanteServicio(id, numeroIdentificacion, nombreSolicitante, nombreUsuario, telefonoSolicitante,

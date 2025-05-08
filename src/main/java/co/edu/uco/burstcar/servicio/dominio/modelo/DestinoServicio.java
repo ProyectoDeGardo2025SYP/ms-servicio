@@ -1,7 +1,6 @@
 package co.edu.uco.burstcar.servicio.dominio.modelo;
 
 import co.edu.uco.burstcar.servicio.dominio.validador.ValidadorDeAtibutos;
-import co.edu.uco.burstcar.servicio.dominio.validador.ValidadorDeObjetos;
 import lombok.NoArgsConstructor;
 
 import java.util.UUID;
@@ -25,7 +24,7 @@ public class DestinoServicio extends EntidadIdentificador{
     public static DestinoServicio nuevoDestino(String nombreDestinatario, String numeroIdentificacion, UbicacionServicio ubicacion) {
         ValidadorDeAtibutos.validarAtributosTexto(nombreDestinatario, "nombre del destinatario", 30);
         ValidadorDeAtibutos.validarAtributosTexto(numeroIdentificacion, "número de indentificación del destinatario", 12);
-        ValidadorDeObjetos.validarNoNulos(ubicacion, "ubicación del destino");
+        ValidadorDeAtibutos.validarObjetoNoNulo(ubicacion, "ubicación del destino");
         return new DestinoServicio(nombreDestinatario, numeroIdentificacion, ubicacion);
     }
 
@@ -39,7 +38,7 @@ public class DestinoServicio extends EntidadIdentificador{
     public static DestinoServicio nuevoDestinoConIdentificador(UUID id,  String nombreDestinatario, String numeroIdentificacion, UbicacionServicio ubicacion) {
         ValidadorDeAtibutos.validarAtributosTexto(nombreDestinatario, "nombre del destinatario", 30);
         ValidadorDeAtibutos.validarAtributosTexto(numeroIdentificacion, "número de indentificación del destinatario", 12);
-        ValidadorDeObjetos.validarNoNulos(ubicacion, "ubicación del destino");
+        ValidadorDeAtibutos.validarObjetoNoNulo(ubicacion, "ubicación del destino");
         return new DestinoServicio(id, nombreDestinatario, numeroIdentificacion, ubicacion);
     }
 
