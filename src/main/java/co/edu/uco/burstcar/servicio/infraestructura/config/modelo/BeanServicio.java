@@ -39,6 +39,11 @@ public class BeanServicio {
     }
 
     @Bean
+    public ServicioConsultarInformacionServiciosPorSolicitante servicioConsultarInformacionServiciosPorSolicitante(RepositorioServicio repositorioServicio){
+        return new ServicioConsultarInformacionServiciosPorSolicitante(repositorioServicio);
+    }
+
+    @Bean
     public ServicioConsultarServicio servicioConsultarServicio(RepositorioServicio repositorioServicio){
         return new ServicioConsultarServicio(repositorioServicio);
     }

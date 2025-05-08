@@ -2,6 +2,7 @@ package co.edu.uco.burstcar.servicio.infraestructura.entrada.servicio.consulta;
 
 import co.edu.uco.burstcar.servicio.aplicacion.casodeuso.servicio.consulta.CasoDeUsoConsultarEstadoServicio;
 import co.edu.uco.burstcar.servicio.aplicacion.casodeuso.servicio.consulta.CasoDeUsoConsultarInformacionServicios;
+import co.edu.uco.burstcar.servicio.aplicacion.casodeuso.servicio.consulta.CasoDeUsoConsultarInformacionServiciosPorSolicitante;
 import co.edu.uco.burstcar.servicio.aplicacion.casodeuso.servicio.consulta.CasoDeUsoConsultarServicio;
 import co.edu.uco.burstcar.servicio.dominio.dto.PaginaDto;
 import co.edu.uco.burstcar.servicio.dominio.dto.ServicioDto;
@@ -16,12 +17,14 @@ import java.util.UUID;
 public class ConsultaControladorServicio {
 
     private final CasoDeUsoConsultarInformacionServicios casoDeUsoConsultarInformacionServicios;
+    private final CasoDeUsoConsultarInformacionServiciosPorSolicitante casoDeUsoConsultarInformacionServiciosPorSolicitante;
     private final CasoDeUsoConsultarEstadoServicio consultarEstadoServicio;
     private final CasoDeUsoConsultarServicio casoDeUsoConsultarServicio;
 
 
-    public ConsultaControladorServicio(CasoDeUsoConsultarInformacionServicios casoDeUsoConsultarInformacionServicios, CasoDeUsoConsultarEstadoServicio consultarEstadoServicio, CasoDeUsoConsultarServicio casoDeUsoConsultarServicio) {
+    public ConsultaControladorServicio(CasoDeUsoConsultarInformacionServicios casoDeUsoConsultarInformacionServicios, CasoDeUsoConsultarInformacionServiciosPorSolicitante casoDeUsoConsultarInformacionServiciosPorSolicitante, CasoDeUsoConsultarEstadoServicio consultarEstadoServicio, CasoDeUsoConsultarServicio casoDeUsoConsultarServicio) {
         this.casoDeUsoConsultarInformacionServicios = casoDeUsoConsultarInformacionServicios;
+        this.casoDeUsoConsultarInformacionServiciosPorSolicitante = casoDeUsoConsultarInformacionServiciosPorSolicitante;
         this.consultarEstadoServicio = consultarEstadoServicio;
         this.casoDeUsoConsultarServicio = casoDeUsoConsultarServicio;
     }
@@ -33,6 +36,14 @@ public class ConsultaControladorServicio {
                                                      @RequestParam(defaultValue = "0") int pagina,
                                                      @RequestParam(defaultValue = "3") int cantidad){
         return this.casoDeUsoConsultarInformacionServicios.ejecutarConsulta(id, pagina, cantidad);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/todos/{id}/solicitante/{solicitante}")
+    public PaginaDto<ServicioDto> consultarServiciosPorSolicitante(@PathVariable UUID id, @PathVariable String solicitante,
+                                                     @RequestParam(defaultValue = "0") int pagina,
+                                                     @RequestParam(defaultValue = "3") int cantidad){
+        return this.casoDeUsoConsultarInformacionServiciosPorSolicitante.ejecutarConsulta(id, solicitante, pagina, cantidad);
     }
 
     @ResponseStatus(HttpStatus.OK)

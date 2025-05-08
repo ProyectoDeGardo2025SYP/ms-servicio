@@ -18,6 +18,8 @@ public interface RepositorioServicio {
     void eliminarLogicamenteInformacionServicio(EstadoServicio estadoServicio, UUID idServicio);
     EstadoServicio consultarEstadoServicio(UUID identificador);
     PaginaDto<ServicioDto> consultarInformacionServicios(UUID identificador, int pagina, int cantidad);
+    PaginaDto<ServicioDto> consultarInformacionServiciosPorSolicitante
+            (UUID identificador, String identificadroSolicitante, int pagina, int cantidad);
     ServicioDto consultarServicio(UUID identificador);
     void realizarSeguimientoServicio(UbicacionServicio ubicacion);
     void actualizarEstadosDelServicio(EstadoServicio estadoServicio, UUID identificador);

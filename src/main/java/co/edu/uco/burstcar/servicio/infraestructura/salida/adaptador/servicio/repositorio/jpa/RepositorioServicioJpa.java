@@ -20,4 +20,12 @@ public interface RepositorioServicioJpa extends JpaRepository<EntidadServicio, U
             nativeQuery = true)
     Page<EntidadServicio> consultarServiciosMenosLosEliminados(@Param("estadoId") UUID estadoId, Pageable pageable);
 
+    @Query(value = "Select * From servicio.servicio Where estado_servicio_id != :estadoId and " +
+            "solicitante_servicio_id = :idSolicitante",
+            countQuery = "Select COUNT(*) From servicio.servicio Where estado_servicio_id != :estadoId",
+            nativeQuery = true)
+    Page<EntidadServicio> consultarServiciosMenosLosEliminadosPorSolicitante(@Param("estadoId") UUID estadoId,
+                                                                             @Param("idSolicitante") UUID solicitante,
+                                                                             Pageable pageable);
+
 }

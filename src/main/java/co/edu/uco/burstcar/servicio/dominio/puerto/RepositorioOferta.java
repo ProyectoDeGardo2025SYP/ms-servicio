@@ -17,5 +17,6 @@ public interface RepositorioOferta {
     void actualizarEstadoOferta(EstadoOferta estadoOferta, UUID identificadorOferta);
     void notificarSolicitanteNegociacionOferta(Oferta oferta);
     PaginaDto<OfertaDto> consultarOfertas(UUID servicio, int pagina, int cantidad);
+    PaginaDto<OfertaDto> consultarOfertasPorPrestador(UUID servicio, String prestador, int pagina, int cantidad);
 
 }

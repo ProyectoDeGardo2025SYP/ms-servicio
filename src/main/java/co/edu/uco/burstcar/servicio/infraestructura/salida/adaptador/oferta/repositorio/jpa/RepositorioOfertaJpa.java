@@ -18,4 +18,12 @@ public interface RepositorioOfertaJpa extends JpaRepository<EntidadOferta, UUID>
             countQuery = "Select COUNT(*) From servicio.oferta Where servicio_id != :servicio_id",
             nativeQuery = true)
     Page<EntidadOferta> obtenerOfertasDeUnServicio(@Param("servicio_id") UUID servicio_id, Pageable pageable);
+
+    @Query(value = "Select * From servicio.oferta Where servicio_id = :servicio_id and " +
+            "prestador_servicio_id = :prestadorId",
+            countQuery = "Select COUNT(*) From servicio.oferta Where servicio_id != :servicio_id",
+            nativeQuery = true)
+    Page<EntidadOferta> obtenerOfertasDeUnServicioPorPrestador(@Param("servicio_id") UUID servicio_id,
+                                                               @Param("prestadorId") UUID prestadorId,
+                                                               Pageable pageable);
 }

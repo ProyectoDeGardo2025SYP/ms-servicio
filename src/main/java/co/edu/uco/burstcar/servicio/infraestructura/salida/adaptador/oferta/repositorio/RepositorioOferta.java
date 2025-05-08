@@ -2,6 +2,7 @@ package co.edu.uco.burstcar.servicio.infraestructura.salida.adaptador.oferta.rep
 
 import co.edu.uco.burstcar.servicio.dominio.dto.OfertaDto;
 import co.edu.uco.burstcar.servicio.dominio.dto.PaginaDto;
+import co.edu.uco.burstcar.servicio.dominio.dto.ServicioDto;
 import co.edu.uco.burstcar.servicio.dominio.modelo.EstadoOferta;
 import co.edu.uco.burstcar.servicio.dominio.modelo.MonedaServicio;
 import co.edu.uco.burstcar.servicio.dominio.modelo.Oferta;
@@ -22,8 +23,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Repository
 public class RepositorioOferta implements co.edu.uco.burstcar.servicio.dominio.puerto.RepositorioOferta {
@@ -75,12 +78,30 @@ public class RepositorioOferta implements co.edu.uco.burstcar.servicio.dominio.p
     public PaginaDto<OfertaDto> consultarOfertas(UUID servicio, int pagina, int cantidad) {
         Pageable pageable = PageRequest.of(pagina, cantidad);
         Page<EntidadOferta> entidadOfertas = this.repositorioOfertaJpa.obtenerOfertasDeUnServicio(servicio, pageable);
+        return mapeoInfoOferta(entidadOfertas);
+    }
 
+    @Override
+    public PaginaDto<OfertaDto> consultarOfertasPorPrestador(UUID servicio, String prestador, int pagina, int cantidad) {
+        Pageable pageable = PageRequest.of(pagina, cantidad);
+        EntidadPrestadorServicio entidadPrestadorServicio = this.repositorioPrestadorServicioJpa.findByNumeroIdentificacion(prestador);
+
+        if (entidadPrestadorServicio == null) {
+            return new PaginaDto<>(Collections.emptyList(), pagina, 0, 0);
+        }
+
+        Page<EntidadOferta> entidadOfertas = this.repositorioOfertaJpa.obtenerOfertasDeUnServicioPorPrestador(servicio,
+                entidadPrestadorServicio.getIdentificador(), pageable);
+        return mapeoInfoOferta(entidadOfertas);
+    }
+
+    private PaginaDto<OfertaDto> mapeoInfoOferta(Page<EntidadOferta> entidadOfertas){
         List<OfertaDto> ofertaDtos = entidadOfertas.getContent().stream().map(entidad -> new OfertaDto(entidad.getIdentificador(),
-                        entidad.getDescripcion(), entidad.getCosto(), entidad.getEntidadMonedaServicio().getNombre(),
-                        entidad.getFechaInicio(), entidad.getFechaFin(), entidad.getEntidadEstadoOferta().getNombre(),
-                        entidad.getEntidadServicio().getIdentificador(),
-                        entidad.getEntidadPrestadorServicio().getNumeroIdentificacion())).toList();
+                entidad.getDescripcion(), entidad.getCosto(), entidad.getEntidadMonedaServicio().getNombre(),
+                entidad.getFechaInicio(), entidad.getFechaFin(), entidad.getEntidadEstadoOferta().getNombre(),
+                entidad.getEntidadServicio().getIdentificador(),
+                entidad.getEntidadPrestadorServicio().getNumeroIdentificacion())).toList();
         return new PaginaDto<>(ofertaDtos, entidadOfertas.getNumber(), entidadOfertas.getTotalPages(), entidadOfertas.getTotalElements());
+
     }
 }

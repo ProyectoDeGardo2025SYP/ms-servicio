@@ -27,6 +27,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -127,24 +128,42 @@ public class RepositorioServicio implements co.edu.uco.burstcar.servicio.dominio
     public PaginaDto<ServicioDto> consultarInformacionServicios(UUID identificador, int pagina, int cantidad) {
         Pageable pageable = PageRequest.of(pagina, cantidad);
         Page<EntidadServicio> entidadServicios = this.repositorioServicioJpa.consultarServiciosMenosLosEliminados(identificador, pageable);
+        return mapeoInfoServicio(entidadServicios);
+    }
+
+    @Override
+    public PaginaDto<ServicioDto> consultarInformacionServiciosPorSolicitante(UUID identificador, String identificadroSolicitante, int pagina, int cantidad) {
+        Pageable pageable = PageRequest.of(pagina, cantidad);
+        EntidadSolicitanteServicio entidadSolicitanteServicio = this.repositorioSolicitanteServicioJpa.findByNumeroIdentificacion(identificadroSolicitante);
+
+        if (entidadSolicitanteServicio == null) {
+            return new PaginaDto<>(Collections.emptyList(), pagina, 0, 0);
+        }
+
+        Page<EntidadServicio> entidadServicios = this.repositorioServicioJpa.consultarServiciosMenosLosEliminadosPorSolicitante(identificador,
+                entidadSolicitanteServicio.getIdentificador(), pageable);
+        return mapeoInfoServicio(entidadServicios);
+    }
+
+    private PaginaDto<ServicioDto> mapeoInfoServicio(Page<EntidadServicio> entidadServicios){
         List<ServicioDto> servicioDtos = entidadServicios.getContent().stream().map(entidad -> new ServicioDto(
-                        entidad.getIdentificador(),
-                        entidad.getDescripcion(),
-                        entidad.getEntidadSolicitanteServicio().getNombreSolicitante(),
-                        entidad.getEntidadSolicitanteServicio().getNumeroIdentificacion(),
-                        entidad.getEntidadTipoServicio().getNombre(),
-                        entidad.getEntidadEstadoServicio().getNombre(),
-                        entidad.getUbicacion().getIdentificador(),
-                        entidad.getUbicacion().getLatitud(),
-                        entidad.getUbicacion().getLongitud(),
-                        entidad.getDestino().getIdentificador(),
-                        entidad.getDestino().getNombreDestinatario(),
-                        entidad.getDestino().getNumeroIdentificacion(),
-                        entidad.getDestino().getEntidadUbicacion().getLatitud(),
-                        entidad.getDestino().getEntidadUbicacion().getLongitud(),
-                        entidad.getCostoInicialSolicitante(),
-                        entidad.getMonedaServicio().getNombre(),
-                        entidad.getFechaCreacion())).collect(Collectors.toList());
+                entidad.getIdentificador(),
+                entidad.getDescripcion(),
+                entidad.getEntidadSolicitanteServicio().getNombreSolicitante(),
+                entidad.getEntidadSolicitanteServicio().getNumeroIdentificacion(),
+                entidad.getEntidadTipoServicio().getNombre(),
+                entidad.getEntidadEstadoServicio().getNombre(),
+                entidad.getUbicacion().getIdentificador(),
+                entidad.getUbicacion().getLatitud(),
+                entidad.getUbicacion().getLongitud(),
+                entidad.getDestino().getIdentificador(),
+                entidad.getDestino().getNombreDestinatario(),
+                entidad.getDestino().getNumeroIdentificacion(),
+                entidad.getDestino().getEntidadUbicacion().getLatitud(),
+                entidad.getDestino().getEntidadUbicacion().getLongitud(),
+                entidad.getCostoInicialSolicitante(),
+                entidad.getMonedaServicio().getNombre(),
+                entidad.getFechaCreacion())).collect(Collectors.toList());
         return new PaginaDto<>(servicioDtos, entidadServicios.getNumber(), entidadServicios.getTotalPages(), entidadServicios.getTotalElements());
     }
 
