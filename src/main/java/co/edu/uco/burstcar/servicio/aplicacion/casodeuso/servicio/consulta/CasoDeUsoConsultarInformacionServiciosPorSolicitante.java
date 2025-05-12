@@ -16,8 +16,8 @@ public class CasoDeUsoConsultarInformacionServiciosPorSolicitante {
         this.servicioConsultarInformacionServiciosPorSolicitante = servicioConsultarInformacionServiciosPorSolicitante;
     }
 
-    public PaginaDto<ServicioDto> ejecutarConsulta(UUID id, String solicitante, int pagina, int cantidad) {
-        return this.servicioConsultarInformacionServiciosPorSolicitante.ejecutarConsulta(id, solicitante,
+    public PaginaDto<ServicioDto> ejecutarConsulta(String solicitante, int pagina, int cantidad) {
+        return this.servicioConsultarInformacionServiciosPorSolicitante.ejecutarConsulta(solicitante,
                 pagina, cantidad);
     }
 }

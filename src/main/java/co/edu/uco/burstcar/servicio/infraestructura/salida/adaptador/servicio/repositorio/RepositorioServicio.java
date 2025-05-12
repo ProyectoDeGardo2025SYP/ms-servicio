@@ -125,14 +125,15 @@ public class RepositorioServicio implements co.edu.uco.burstcar.servicio.dominio
     }
 
     @Override
-    public PaginaDto<ServicioDto> consultarInformacionServicios(UUID identificador, int pagina, int cantidad) {
+    public PaginaDto<ServicioDto> consultarInformacionServicios(Double latitud, Double longitud, int pagina, int cantidad) {
         Pageable pageable = PageRequest.of(pagina, cantidad);
-        Page<EntidadServicio> entidadServicios = this.repositorioServicioJpa.consultarServiciosMenosLosEliminados(identificador, pageable);
+        Page<EntidadServicio> entidadServicios = this.repositorioServicioJpa.
+                consultarServiciosParaPrestadorConFiltroGeografico(latitud, longitud, 0.2, pageable);
         return mapeoInfoServicio(entidadServicios);
     }
 
     @Override
-    public PaginaDto<ServicioDto> consultarInformacionServiciosPorSolicitante(UUID identificador, String identificadroSolicitante, int pagina, int cantidad) {
+    public PaginaDto<ServicioDto> consultarInformacionServiciosPorSolicitante(String identificadroSolicitante, int pagina, int cantidad) {
         Pageable pageable = PageRequest.of(pagina, cantidad);
         EntidadSolicitanteServicio entidadSolicitanteServicio = this.repositorioSolicitanteServicioJpa.findByNumeroIdentificacion(identificadroSolicitante);
 
@@ -140,7 +141,7 @@ public class RepositorioServicio implements co.edu.uco.burstcar.servicio.dominio
             return new PaginaDto<>(Collections.emptyList(), pagina, 0, 0);
         }
 
-        Page<EntidadServicio> entidadServicios = this.repositorioServicioJpa.consultarServiciosMenosLosEliminadosPorSolicitante(identificador,
+        Page<EntidadServicio> entidadServicios = this.repositorioServicioJpa.consultarServiciosMenosLosEliminadosPorSolicitante(
                 entidadSolicitanteServicio.getIdentificador(), pageable);
         return mapeoInfoServicio(entidadServicios);
     }

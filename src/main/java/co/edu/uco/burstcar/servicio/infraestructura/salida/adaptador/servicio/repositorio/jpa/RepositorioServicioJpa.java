@@ -15,17 +15,56 @@ import java.util.UUID;
 @Repository
 public interface RepositorioServicioJpa extends JpaRepository<EntidadServicio, UUID> {
 
-    @Query(value = "Select * From servicio.servicio Where estado_servicio_id != :estadoId",
-           countQuery = "Select COUNT(*) From servicio.servicio Where estado_servicio_id != :estadoId",
-            nativeQuery = true)
-    Page<EntidadServicio> consultarServiciosMenosLosEliminados(@Param("estadoId") UUID estadoId, Pageable pageable);
+    @Query(value = """
+    SELECT s.*
+    FROM servicio.servicio s
+    JOIN servicio.ubicacion u ON s.ubicacion_servicio_id = u.identificador
+    WHERE s.estado_servicio_id NOT IN (
+      '95674536-47ba-43af-8161-f329df3a04e5',
+      '95674536-47ba-43af-8161-f329df3a04e7',
+      '95674536-47ba-43af-8161-f329df3a04e8',
+      '95674536-47ba-43af-8161-f329df3a04e9'
+    )
+    AND (
+      6371 * acos(
+        cos(radians(:latitud)) * cos(radians(u.latitud)) *
+        cos(radians(u.longitud) - radians(:longitud)) +
+        sin(radians(:latitud)) * sin(radians(u.latitud))
+      )
+    ) <= :radioKm
+    """,
+            countQuery = """
+    SELECT count(*)
+    FROM servicio.servicio s
+    JOIN servicio.ubicacion u ON s.ubicacion_servicio_id = u.identificador
+    WHERE s.estado_servicio_id NOT IN (
+      '95674536-47ba-43af-8161-f329df3a04e5',
+      '95674536-47ba-43af-8161-f329df3a04e7',
+      '95674536-47ba-43af-8161-f329df3a04e8',
+      '95674536-47ba-43af-8161-f329df3a04e9'
+    )
+    AND (
+      6371 * acos(
+        cos(radians(:latitud)) * cos(radians(u.latitud)) *
+        cos(radians(u.longitud) - radians(:longitud)) +
+        sin(radians(:latitud)) * sin(radians(u.latitud))
+      )
+    ) <= :radioKm
+    """,
+            nativeQuery = true
+    )
+    Page<EntidadServicio> consultarServiciosParaPrestadorConFiltroGeografico(
+            @Param("latitud") double latitud,
+            @Param("longitud") double longitud,
+            @Param("radioKm") double radioKm,
+            Pageable pageable
+    );
 
-    @Query(value = "Select * From servicio.servicio Where estado_servicio_id != :estadoId and " +
+    @Query(value = "Select * From servicio.servicio Where estado_servicio_id != '95674536-47ba-43af-8161-f329df3a04e7' and " +
             "solicitante_servicio_id = :idSolicitante",
-            countQuery = "Select COUNT(*) From servicio.servicio Where estado_servicio_id != :estadoId",
+            countQuery = "Select COUNT(*) From servicio.servicio Where estado_servicio_id != '95674536-47ba-43af-8161-f329df3a04e7'",
             nativeQuery = true)
-    Page<EntidadServicio> consultarServiciosMenosLosEliminadosPorSolicitante(@Param("estadoId") UUID estadoId,
-                                                                             @Param("idSolicitante") UUID solicitante,
+    Page<EntidadServicio> consultarServiciosMenosLosEliminadosPorSolicitante(@Param("idSolicitante") UUID solicitante,
                                                                              Pageable pageable);
 
 }

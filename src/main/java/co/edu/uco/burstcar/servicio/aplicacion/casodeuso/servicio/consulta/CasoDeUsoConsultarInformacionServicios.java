@@ -15,7 +15,8 @@ public class CasoDeUsoConsultarInformacionServicios {
         this.servicioConsultarInformacionServicios = servicioConsultarInformacionServicios;
     }
 
-    public PaginaDto<ServicioDto> ejecutarConsulta(UUID id, int pagina, int cantidad) {
-        return this.servicioConsultarInformacionServicios.ejecutarConsulta(id, pagina, cantidad);
+    public PaginaDto<ServicioDto> ejecutarConsulta(Double latitud, Double longitud, int pagina, int cantidad) {
+        return this.servicioConsultarInformacionServicios.ejecutarConsulta(
+                latitud, longitud, pagina, cantidad);
     }
 }

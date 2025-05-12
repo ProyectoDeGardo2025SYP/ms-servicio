@@ -14,7 +14,8 @@ public class ServicioConsultarInformacionServicios {
         this.repositorioServicio = repositorioServicio;
     }
 
-    public PaginaDto<ServicioDto> ejecutarConsulta(UUID id, int pagina, int cantidad){
-        return this.repositorioServicio.consultarInformacionServicios(id, pagina, cantidad);
+    public PaginaDto<ServicioDto> ejecutarConsulta(Double latitud, Double longitud, int pagina, int cantidad){
+        return this.repositorioServicio.consultarInformacionServicios(
+                latitud, longitud, pagina, cantidad);
     }
 }

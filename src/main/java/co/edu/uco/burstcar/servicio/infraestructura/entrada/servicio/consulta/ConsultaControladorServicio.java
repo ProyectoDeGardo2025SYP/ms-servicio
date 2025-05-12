@@ -31,19 +31,20 @@ public class ConsultaControladorServicio {
 
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/todos/{id}")
-    public PaginaDto<ServicioDto> consultarServicios(@PathVariable UUID id,
+    @GetMapping("/todos")
+    public PaginaDto<ServicioDto> consultarServicios(@RequestParam Double latitud,
+                                                     @RequestParam Double longitud,
                                                      @RequestParam(defaultValue = "0") int pagina,
                                                      @RequestParam(defaultValue = "3") int cantidad){
-        return this.casoDeUsoConsultarInformacionServicios.ejecutarConsulta(id, pagina, cantidad);
+        return this.casoDeUsoConsultarInformacionServicios.ejecutarConsulta(latitud, longitud, pagina, cantidad);
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/todos/{id}/solicitante/{solicitante}")
-    public PaginaDto<ServicioDto> consultarServiciosPorSolicitante(@PathVariable UUID id, @PathVariable String solicitante,
+    @GetMapping("/todos/solicitante/{solicitante}")
+    public PaginaDto<ServicioDto> consultarServiciosPorSolicitante(@PathVariable String solicitante,
                                                      @RequestParam(defaultValue = "0") int pagina,
                                                      @RequestParam(defaultValue = "3") int cantidad){
-        return this.casoDeUsoConsultarInformacionServiciosPorSolicitante.ejecutarConsulta(id, solicitante, pagina, cantidad);
+        return this.casoDeUsoConsultarInformacionServiciosPorSolicitante.ejecutarConsulta(solicitante, pagina, cantidad);
     }
 
     @ResponseStatus(HttpStatus.OK)
